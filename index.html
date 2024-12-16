@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chainlet Orbits: Topological Address Embedding for Blockchain</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background: #4CAF50;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+        }
+        nav {
+            background: #333;
+            color: white;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background: #555;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+        .collapsible {
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            outline: none;
+            background: #f4f4f4;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .collapsible:hover {
+            background: #ddd;
+        }
+        .content {
+            padding: 15px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+        }
+        figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        figure figcaption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Chainlet Orbits</h1>
+        <p>Topological Address Embedding for Blockchain</p>
+    </header>
+    <nav>
+        <a href="#abstract">Abstract</a>
+        <a href="#introduction">Introduction</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#results">Results</a>
+        <a href="#figures">Figures</a>
+        <a href="#references">References</a>
+    </nav>
+    <div class="container">
+        <div id="abstract" class="section">
+            <button class="collapsible">Abstract</button>
+            <div class="content">
+                <p>We propose Chainlet Orbits, a novel approach for embedding blockchain addresses by leveraging their structural role in transaction graphs. This method enables compact and interpretable embeddings, significantly outperforming Graph Neural Networks in scalability and node classification tasks.</p>
+            </div>
+        </div>
+        <div id="introduction" class="section">
+            <button class="collapsible">Introduction</button>
+            <div class="content">
+                <p>The success of Bitcoin has driven significant blockchain adoption, creating networks with enormous data volumes and increasing analytical challenges. Blockchain transaction networks can be modeled as directed, weighted graphs where Graph Neural Networks (GNNs) offer strong embeddings but face scalability and interpretability issues.</p>
+                <p>Chainlet Orbits addresses these problems by introducing a topological approach that embeds blockchain addresses based on their structural roles within transaction subgraphs. Unlike GNNs, Chainlet Orbits deliver interpretable embeddings efficiently, making them applicable to massive transaction datasets. Key use cases include detecting e-crime patterns like ransomware operations and financial fraud, with results showing exceptional accuracy.</p>
+            </div>
+        </div>
+        <div id="methodology" class="section">
+            <button class="collapsible">Methodology</button>
+            <div class="content">
+                <p>Our method defines orbits within blockchain transaction graphs, identifying roles of nodes based on their connections. For example, ransomware addresses often consolidate received payments into a single output, a pattern captured by specific orbits.</p>
+            </div>
+        </div>
+        <div id="results" class="section">
+            <button class="collapsible">Results</button>
+            <div class="content">
+                <p>Experiments on BitcoinHeist data demonstrate the effectiveness of Chainlet Orbits in classifying nodes with high accuracy. Compared to Random Forest classifiers on Graph Neural Networks, our method achieves superior performance with less computational overhead.</p>
+                <figure>
+                    <img src="results_chart.png" alt="Performance Comparison">
+                    <figcaption>Figure 1: Classification accuracy across different models.</figcaption>
+                </figure>
+            </div>
+        </div>
+        <div id="figures" class="section">
+            <button class="collapsible">Figures</button>
+            <div class="content">
+                <figure>
+                    <img src="orbit_visualization.png" alt="Visualization of Orbits">
+                    <figcaption>Figure 2: Visualization of common transaction orbits in blockchain networks.</figcaption>
+                </figure>
+                <figure>
+                    <img src="ransomware_pattern.png" alt="Ransomware Address Patterns">
+                    <figcaption>Figure 3: Common transaction patterns observed in ransomware addresses.</figcaption>
+                </figure>
+            </div>
+        </div>
+        <div id="references" class="section">
+            <button class="collapsible">References</button>
+            <div class="content">
+                <ul>
+                    <li>Akcora, Cuneyt Gurcan, et al. "Forecasting Bitcoin Price with Graph Chainlets." PAKDD.</li>
+                    <li>Weber, Mark, et al. "Anti-Money Laundering in Bitcoin: Experimenting with Graph Convolutional Networks." IEEE Transactions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Chainlet Orbits | All Rights Reserved</p>
+    </footer>
+    <script>
+        const collapsibles = document.querySelectorAll(".collapsible");
+        collapsibles.forEach(button => {
+            button.addEventListener("click", () => {
+                button.classList.toggle("active");
+                const content = button.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
