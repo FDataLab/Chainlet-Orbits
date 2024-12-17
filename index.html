@@ -4,16 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chainlet Orbits: Topological Address Embedding for Blockchain</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        p {
+            text-align: justify;
+            margin: 0 auto;
+            width: 80%;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>Chainlet Orbits</h1>
+    <h1>Chainlet Orbits: Topological Address Embedding for Blockchain
+</h1>
     <p>Topological Address Embedding for Blockchain</p>
     <h2>Abstract</h2>
     <p>The rise of cryptocurrencies like Bitcoin has not only increased trade volumes but also broadened the use of graph machine learning techniques, such as address embeddings, to analyze transactions and decipher user patterns. Traditional detection methods rely on simple heuristics and extensive data gathering, while more advanced Graph Neural Networks encounter challenges such as scalability, poor interpretability, and label scarcity in massive blockchain transaction networks.</p>
     <p>To overcome the computational and interpretability limitations of existing techniques, we introduce a topological approach, Chainlet Orbits, which embeds blockchain addresses by leveraging their topological characteristics in temporal transactions. We employ our innovative address embeddings to investigate financial behavior and e-crime in the Bitcoin, Litecoin, and Ethereum networks, focusing on distinctive substructures that arise from user behavior. In node classification experiments, our model demonstrates exceptional performance when compared to GNN-based approaches. Furthermore, our approach embeds all daily nodes of the largest blockchain transaction network, Bitcoin, and creates explainable machine learning models in less than 17 minutes, which takes days for GNN-based approaches.</p>
+    <h2>Chainlet Orbits</h2>
+    <p>In blockchain networks, transactions are represented as directed graphs where nodes correspond to addresses, and edges represent the transfer of cryptocurrency between nodes. To analyze these graphs effectively, we introduce <strong>Chainlet Orbits</strong>, a topological embedding approach that identifies and classifies address roles by leveraging <strong>transaction substructures</strong>.</p>
+    <h3>UTXO-Based Orbits (Bitcoin and Litecoin)</h3>
+    <p>In Bitcoin’s <strong>Unspent Transaction Output (UTXO)</strong> model, transactions consume inputs and create outputs. We define <strong>2-chainlets</strong>, which describe the relationship between input and output addresses:</p>
+    <ul>
+        <li><strong>Definition</strong>: A 2-chainlet has <code>X</code> inputs and <code>M</code> outputs for the first transaction and <code>N</code> outputs for the second transaction.</li>
+        <li><strong>Orbit Notation</strong>: We use <code>X-M-N</code> to specify these patterns.</li>
+    </ul>
+    <p>For example, Orbits 9 to 23 describe <strong>X-2-N</strong> patterns where transactions receive coins from previous outputs. Active orbits are indicated with <strong>red addresses</strong>, while passive orbits appear <strong>gray</strong> (See <strong>Figure 10</strong>: X-2-N Orbits).</p>
 
-    <h2>Introduction</h2>
-    <p>The success of Bitcoin has driven significant blockchain adoption, creating networks with enormous data volumes and increasing analytical challenges. Blockchain transaction networks can be modeled as directed, weighted graphs where Graph Neural Networks (GNNs) offer strong embeddings but face scalability and interpretability issues.</p>
-    <p>Chainlet Orbits addresses these problems by introducing a topological approach that embeds blockchain addresses based on their structural roles within transaction subgraphs. Unlike GNNs, Chainlet Orbits deliver interpretable embeddings efficiently, making them applicable to massive transaction datasets. Key use cases include detecting e-crime patterns like ransomware operations and financial fraud, with results showing exceptional accuracy.</p>
+    <h3>Account-Based Orbits (Ethereum)</h3>
+    <p>Unlike Bitcoin, Ethereum operates on an <strong>account-based</strong> model. Transactions involve <strong>one sender</strong> and <strong>one recipient</strong>, limiting complex chainlet formations. To adapt Chainlet Orbits:</p>
+    <ul>
+        <li><strong>Anchor Nodes</strong>:
+            <ul>
+                <li><strong>Anchor 1</strong>: Nodes initiating a transaction whose output appears in subsequent transactions.</li>
+                <li><strong>Anchor 2</strong>: Nodes that receive and forward funds (See <strong>Figure 7</strong>: Ethereum Anchor Nodes).</li>
+            </ul>
+        </li>
+        <li><strong>Neighborhood Analysis</strong>: By examining <code>3-hop neighborhoods</code>, we capture local transaction behaviors that are otherwise undetectable in simpler models.</li>
+    </ul>
+
+    <h3>Key Experiments and Results</h3>
+    <p>We evaluate Chainlet Orbits on the <strong>BitcoinHeist Dataset</strong> and large-scale blockchain networks:</p>
+    <h4>BitcoinHeist Results</h4>
+    <p>Using a <strong>Random Forest classifier</strong> (300 trees, 80/20 split), Chainlet Orbits achieve <strong>robust node classification</strong> in identifying ransomware addresses:</p>
+    <ul>
+        <li><strong>AUC (Area Under Curve)</strong> remains stable, with minor performance drops when sampling rates increase from 50K to 1M.</li>
+        <li>Chainlet Orbits outperform existing methods due to their resilience against class imbalance.</li>
+    </ul>
+
+    <h4>Ethereum DeFi Address Classification</h4>
+    <p>For Ethereum addresses, Chainlet Orbits achieve an accuracy of <strong>0.97</strong> and <strong>AUC of 0.86</strong> when distinguishing protocol addresses (e.g., DeFi protocols) from normal addresses (See <strong>Figure 12</strong>: AUC Performance).</p>
+
+    <p>By efficiently embedding blockchain addresses, Chainlet Orbits provide interpretable and scalable machine learning models, outperforming traditional GNN-based techniques. This methodology demonstrates broad applicability across UTXO and account-based blockchains, enabling advanced financial behavior analysis and e-crime detection.</p>
 </body>
 </html>
