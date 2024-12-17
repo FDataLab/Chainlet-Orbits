@@ -237,7 +237,7 @@ in 2-chainlets.</p>
     <p>Passive orbits yield higher AUC values compared to active orbits. This result suggests that studying payer behaviors (e.g., victims in ransomware and buyers in darknet markets) is particularly effective for identifying e-crime addresses.</p>
 
     <figure>
-        <img src="figs/fig5.png" alt="Orbit-based Classification Performance" style="width: 60%;">
+        <img src="figs/fig5.png" alt="Orbit-based Classification Performance" style="width: 80%;">
         <figcaption>AUC scores for orbit-based e-crime address classification. White and darknet classes are undersampled. Orbit performance remains robust as sample sizes increase.</figcaption>
     </figure>
 
@@ -262,7 +262,7 @@ in 2-chainlets.</p>
     <p>Our analysis indicates that e-crime coins are first consolidated in specific addresses (Orbit 30 and 31) and subsequently mixed through intermediary steps. This makes identifying and tracking these addresses particularly challenging.</p>
 
     <figure>
-        <img src="figs/fig6.png" alt="Adversarial Patterns of E-Crime" style="width: 60%;">
+        <img src="figs/fig6.png" alt="Adversarial Patterns of E-Crime" style="width: 90%;">
         <figcaption>Adversarial patterns in ransomware and coin-mixing transactions. Darknet market sellers consolidate payments (Orbit 30, 31) before coin-mixing.</figcaption>
     </figure>
 
@@ -273,10 +273,24 @@ in 2-chainlets.</p>
         <li>Coin-mixing involves consolidation and multi-step transfers, which stand out in orbit-based analysis.</li>
         <li>White addresses rarely form the same complex structures, making anomalies easier to detect.</li>
     </ul>
-
     <p>These insights highlight the utility of orbits in identifying adversarial address patterns and tracking e-crime behavior within blockchain networks.</p>
 
+    <h2>Account Network and Chainlets</h2>
+    <p>We extend our definition to account-based blockchains by using the temporal order. Unlike Bitcoin’s UTXO model, Ethereum uses an account-based model where transactions involve two addresses: one input address and one output address. Therefore, the concept of chainlets needs to be adapted to this model where 2-chainlets are not naturally defined. We define chainlet orbits for Ethereum by focusing on the temporal transaction patterns within the network.</p>
+    <p>Specifically, we look at the \( k = 3 \)-hop neighborhoods of nodes (accounts) in the Ethereum transaction graph to capture local substructures. This choice allows us to both apply the vanilla orbit definitions to the account network without modification and also standardize orbit roles across UTXO and account-based blockchains.</p>
+    <p>In order to apply the UTXO orbit models to the Ethereum network, we employ ordinary nodes as <em>anchors</em> to serve a role similar to that of a UTXO transaction node. An anchor node is an address involved in a specific transaction pattern within the 3-hop neighborhood.</p>
+    <p><strong>Definition 6 (Anchor 1).</strong> An anchor 1 is an address node that is part of an orbit initiating at least one transaction such that its output is used in two subsequent transactions.</p>
+    <p><strong>Definition 7 (Anchor 2).</strong> An anchor 2 node is an address node that is part of an orbit receiving coins from at least one other node and forwarding to at least one other address.</p>
 
-    <p>We extend our definition to account-based blockchains by using the temporal order.</p>
+    <figure>
+        <img src="figs/EthOrbit.png" alt="Ethereum Anchor Example" style="width: 60%;">
+        <figcaption>Figure 7: Orbit example in Ethereum network. Anchors in the figure act as the transaction nodes in Orbits 9, 10, and 11.</figcaption>
+    </figure>
+
+    <p>Once anchors 1 and 2 are defined, we extract 2-chainlets and compute orbits of address nodes as was done in Definition 3. By analyzing these orbit patterns, we effectively capture the dynamic transaction behaviors characteristic of account-based blockchain networks such as Ethereum.</p>
+
+    <h3>Limitations</h3>
+    <p>We note that account-based transactions inherently involve simpler, direct transactions between two parties (one sender and one receiver). This simplicity restricts the complexity of the transaction graph and subsequently limits the depth of analysis that can be performed using orbits. Without the natural formation of complex chainlets as in UTXO models, it’s challenging to capture rich, multi-step transaction patterns.</p>
+
 </body>
 </html>
