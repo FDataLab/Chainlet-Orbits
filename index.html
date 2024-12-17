@@ -74,7 +74,7 @@
 in 2-chainlets.</p>
 
     <figure>
-        <img src="figs/fig3.png" alt="Active and Passive Orbits Example" style="width: 80%;">
+        <img src="figs/fig3.png" alt="Active and Passive Orbits Example" style="width: 90%;">
         <figcaption>Sample active and passive orbit addresses in 2-chainlets. Active orbits (striped) show addresses initiating transactions, while passive orbits (checkered) only receive coins.</figcaption>
     </figure>
 
@@ -283,14 +283,32 @@ in 2-chainlets.</p>
     <p><strong>Anchor 2.</strong> An anchor 2 node is an address node that is part of an orbit receiving coins from at least one other node and forwarding to at least one other address.</p>
 
     <figure>
-        <img src="figs/EthOrbit.png" alt="Ethereum Anchor Example" style="width: 50%;">
+        <img src="figs/EthOrbit.png" alt="Ethereum Anchor Example" style="width: 30%;">
         <figcaption>Orbit example in Ethereum network. Anchors in the figure act as the transaction nodes in Orbits 9, 10, and 11.</figcaption>
     </figure>
 
     <p>Once anchors 1 and 2 are defined, we extract 2-chainlets and compute orbits of address nodes. By analyzing these orbit patterns, we effectively capture the dynamic transaction behaviors characteristic of account-based blockchain networks such as Ethereum.</p>
 
-    <h3>Limitations</h3>
-    <p>We note that account-based transactions inherently involve simpler, direct transactions between two parties (one sender and one receiver). This simplicity restricts the complexity of the transaction graph and subsequently limits the depth of analysis that can be performed using orbits. Without the natural formation of complex chainlets as in UTXO models, it’s challenging to capture rich, multi-step transaction patterns.</p>
+
+    <p><strong>Limitations.</strong> We note that account-based transactions inherently involve simpler, direct transactions between two parties (one sender and one receiver). This simplicity restricts the complexity of the transaction graph and subsequently limits the depth of analysis that can be performed using orbits. Without the natural formation of complex chainlets as in UTXO models, it’s challenging to capture rich, multi-step transaction patterns.</p>
+
+    <h2>Ethereum Results</h2>
+    <p>We train an address classifier on Ethereum for four types of DeFi protocols: lending, assets, derivatives, and decentralized exchanges, as well as a class for ordinary (“normal”) addresses. The classification problem is significant because new protocols are introduced on the Ethereum blockchain daily, and existing protocols create new addresses. Users and blockchain data analytics companies scour offline resources to find the entity behind an address with the goal of tracking investment and portfolio decisions, detecting transaction anomalies, and identifying smart contract hacking attempts. Automated address classification alleviates the need for much manual work. Hence, address type classification has appeared as an important and challenging task in Graph Machine Learning.</p>
+
+    <p>It is important to note that Ethereum addresses, whether they belong to smart contracts or externally owned accounts, share the same format: a 42-character hexadecimal string beginning with "0x." This uniformity means that, when looking at the address string alone, there is no inherent way to differentiate between an address that represents a smart contract and one that represents an externally owned account.</p>
+
+    <p>The distinction between these two types of addresses is critical in understanding their behavior and capabilities on the Ethereum network. Smart contracts are autonomous programs with code execution capabilities, while externally owned accounts are controlled by private keys and are responsible for initiating transactions. Without additional context or metadata, simply examining the address string does not reveal this information.</p>
+
+    <p><strong>Experimental Setup:</strong> We selected the daily graph of September 20, 2021, because it contained the highest number of protocol addresses in ether transactions. However, even for this day, the data imbalance is significant: only 89 protocol addresses appeared in over 1 million ether transactions. To address this, we applied a down-sampling strategy for the “normal” addresses. Due to the limited dataset of protocol addresses, we were constrained to use a binary classification scheme distinguishing between protocol and non-protocol addresses.</p>
+
+    <p><strong>Results:</strong> We used a random forest algorithm with 300 trees on orbits, where the most important orbits identified by the Gini importance measure were orbits 0, 1, 2, 8, and 29. These orbits are all passive orbits used to receive coin payments from users.</p>
+
+    <p>The orbit model achieved an accuracy of 0.97, and the following figure shows an Area Under the Curve (AUC) of 0.86. Adding more ordinary nodes initially improves the classifier's performance but eventually deteriorates it. These results indicate that orbits are highly informative for Ethereum address classification, but additional labeled data, specifically unique addresses, is essential for further validation.</p>
+
+    <figure>
+        <img src="figs/combined_roc_curve_orbits.png" alt="Ethereum Address Classification Performance" style="width: 60%;">
+        <figcaption>Ethereum address classification performance. The AUC achieves a peak value of 0.86 for protocol addresses.</figcaption>
+    </figure>
 
 </body>
 </html>
