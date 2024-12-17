@@ -74,13 +74,116 @@
 in 2-chainlets.</p>
 
     <figure>
-        <img src="figs/active-passive-fig3.png" alt="Active and Passive Orbits Example" style="width: 60%;">
+        <img src="figs/fig3.png" alt="Active and Passive Orbits Example" style="width: 80%;">
         <figcaption>Sample active and passive orbit addresses in 2-chainlets. Active orbits (striped) show addresses initiating transactions, while passive orbits (checkered) only receive coins.</figcaption>
     </figure>
 
     <p>The distinction between active and passive orbits is significant for analyzing specific behaviors within the transaction graph. Active orbits help train classifiers to identify spending patterns, such as paying for ransom, as they reflect behavior initiated by the address owner. Conversely, passive orbits are useful for examining receiving behaviors.</p>
 
+        <h2>Experimental Setup</h2>
+    <p><strong>Datasets.</strong> We extract data from the Bitcoin, Litecoin, and Ethereum transaction networks.</p>
+    <p><strong>Bitcoin Transaction Network.</strong> We have downloaded and analyzed the complete Bitcoin transaction graph from its inception in 2009 by utilizing the Bitcoin Core Wallet and the <a href="https://github.com/blockchain-etl/bitcoin-etl">Bitcoin-ETL library</a>.</p>
+    <p><strong>BitcoinHeist Addresses.</strong> Our ransomware dataset is a union of datasets from three widely adopted studies: Montreal, Princeton, and Padua. The combined dataset contains addresses from 27 ransomware families. A total of 19,930 unique ransomware addresses appear 62,641 times since 2009.</p>
+    <p><strong>Bitcoin Darknet Addresses.</strong> We downloaded the Grams dataset from the Darknet Market Archives. This dataset spans from June 9, 2014, to July 12, 2015. We identified 7,557 unique addresses associated with transactions from darknet marketplaces, totaling 1,288,100 occurrences.</p>
+    <p><strong>Ethereum Transaction Network.</strong> The complete Ethereum transaction graph was downloaded and analyzed from its inception in 2015 using the Geth Wallet and the <a href="https://github.com/blockchain-etl/ethereum-etl">Ethereum-ETL library</a>.</p>
+    <p><strong>Ethereum DeFi Addresses.</strong> Our DeFi dataset consists of lending, asset, derivative, and decentralized exchange addresses. The combined dataset contains 1,407 addresses, appearing a total of 108 million times since 2015.</p>
+    <p><strong>Litecoin Transaction Network.</strong> We downloaded and analyzed the complete Litecoin transaction graph from its inception in 2011 using the Litecoin Core Wallet and RPC calls.</p>
+    <p><strong>Hardware.</strong> We ran experiments on a single Dell PowerEdge R630, featuring an Intel Xeon E5-2650 v3 Processor (10 cores, 2.30 GHz, 20MB Cache), and 192GB of RAM (DDR4-2133MHz).</p>
+    <p><strong>Preprocessing.</strong> We did not apply any normalization or preprocessing. Extracting orbits is computationally efficient, enabling the entire transaction network to be used without removing any edges or nodes.</p>
+    <p>We made the full address orbits, which are 27 GB in size, publicly available at <a href="https://huggingface.co/datasets/Chainlet/Blockchain_Orbits">Huggingface Blockchain Orbits</a>. Classifier data is also provided there.</p>
+    <p><strong>Computational Complexity.</strong> Extracting a 2-chainlet requires three searches on the adjacency matrix. The first step involves finding all transaction nodes, costing \( O(V) \). The second step, which searches for address nodes shared between transaction pairs, has a complexity of \( O(V^3) \). However, because 57.40% of Bitcoin transactions have fewer than two input and output addresses, the complexity is effectively reduced to \( k \times O(V^2) \), where \( k \approx 2 \).</p>
+    <p>As shown in the below figure, on the majority of days, orbit extraction is completed within 1,000 seconds (less than 17 minutes).</p>
+    <figure>
+        <img src="figs/time2.png" alt="Orbit Discovery Time" style="width: 60%;">
+        <figcaption>Orbit discovery time costs from the daily Bitcoin transaction graph. Each data point denotes a specific day.</figcaption>
+    </figure>
 
+        <h2>Experimental Results</h2>
+    <p>We apply orbit discovery to the Bitcoin, Litecoin, and Ethereum blockchains. As ground truth address labels are predominantly available for the Bitcoin network, we primarily focus on the Bitcoin transaction network and detail our findings in this section. Results for Ethereum and Litecoin are also discussed in the appendices.</p>
+
+    <h3>Heuristics</h3>
+    <p>We employ co-spending and transition heuristics with all historical ransomware addresses. This leads to the discovery of 40 unique addresses associated with well-known ransomware families such as CryptoLocker, CryptoWall, and CryptoTorLocker. These low numbers suggest that researchers had previously expanded these datasets using similar heuristics.</p>
+
+    <h3>Orbits on the BitcoinHeist Benchmark</h3>
+    <p>We use orbits of Bitcoin addresses in a binary (white vs. ransomware) node classification task on the BitcoinHeist dataset. The dataset includes:</p>
+    <ul>
+        <li>2,916,697 ransomware and white addresses</li>
+        <li>1,048,576 transactions from January 2009 to December 2018</li>
+    </ul>
+    <p>Transactions with amounts less than 0.3 BTC were excluded, as ransomware payments are typically larger. For classification, we use a Random Forest model with 300 trees and an 80/20 train/test split.</p>
+    <p><strong>Results.</strong> The following table compares the AUC scores for address classification:</p>
+    <table border="1" style="width: 60%; margin: 20px auto; text-align: center;">
+        <tr>
+            <th>Sample</th>
+            <th>BitcoinHeist</th>
+            <th>Orbit</th>
+            <th>BitcoinHeist + Orbit</th>
+        </tr>
+        <tr>
+            <td>50K</td>
+            <td>0.807</td>
+            <td>0.857</td>
+            <td>0.908</td>
+        </tr>
+        <tr>
+            <td>100K</td>
+            <td>0.808</td>
+            <td>0.856</td>
+            <td>0.908</td>
+        </tr>
+        <tr>
+            <td>500K</td>
+            <td>0.798</td>
+            <td>0.849</td>
+            <td>0.903</td>
+        </tr>
+        <tr>
+            <td>1M</td>
+            <td>0.791</td>
+            <td>0.839</td>
+            <td>0.895</td>
+        </tr>
+    </table>
+    <p>The results demonstrate that orbits provide robust performance compared to BitcoinHeist features alone, especially in larger datasets.</p>
+
+    <h3>Orbits on the Large Bitcoin Network</h3>
+    <p>We evaluate the generalization of e-crime classification with a larger Bitcoin dataset, sampling 1% of the daily white addresses (3.16 million addresses). The labeled data includes:</p>
+    <ul>
+        <li>1.28 million darknet market addresses</li>
+        <li>64,000 ransomware addresses</li>
+    </ul>
+    <p>We employ a one-versus-rest Random Forest classifier with an 80/20 train/test split. Figure 5 shows consistent AUC performance exceeding 0.8, demonstrating the strength of orbit-based classifiers.</p>
+
+    <h4>Active and Passive Orbits</h4>
+    <p>We analyze the role of orbit types (active vs. passive) in detecting e-crime payments. Table 3 summarizes the macro-averaged AUC performance:</p>
+    <table border="1" style="width: 60%; margin: 20px auto; text-align: center;">
+        <tr>
+            <th>Class</th>
+            <th>Active Orbits AUC</th>
+            <th>Passive Orbits AUC</th>
+        </tr>
+        <tr>
+            <td>White</td>
+            <td>0.731</td>
+            <td>0.870</td>
+        </tr>
+        <tr>
+            <td>Ransomware (RS)</td>
+            <td>0.725</td>
+            <td>0.736</td>
+        </tr>
+        <tr>
+            <td>Darknet Market (DM)</td>
+            <td>0.727</td>
+            <td>0.876</td>
+        </tr>
+    </table>
+    <p>Passive orbits yield higher AUC values compared to active orbits. This result suggests that studying payer behaviors (e.g., victims in ransomware and buyers in darknet markets) is particularly effective for identifying e-crime addresses.</p>
+
+    <figure>
+        <img src="figs/fig5.png" alt="Orbit-based Classification Performance" style="width: 60%;">
+        <figcaption>AUC scores for orbit-based e-crime address classification. White and darknet classes are undersampled. Orbit performance remains robust as sample sizes increase.</figcaption>
+    </figure>
 
     <p>We extend our definition to account-based blockchains by using the temporal order.</p>
 </body>
