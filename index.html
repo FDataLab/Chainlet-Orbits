@@ -111,7 +111,7 @@ in 2-chainlets.</p>
         <li>1,048,576 transactions from January 2009 to December 2018</li>
     </ul>
     <p>Transactions with amounts less than 0.3 BTC were excluded, as ransomware payments are typically larger. For classification, we use a Random Forest model with 300 trees and an 80/20 train/test split.</p>
-    <p><strong>Results.</strong> The following table compares the AUC scores for address classification:</p>
+    <p><strong>Results.</strong> The following table compares the AUC scores for address classification. The results demonstrate that orbits provide robust performance compared to BitcoinHeist features alone, especially in larger datasets.</p>
     <table border="1" style="width: 60%; margin: 20px auto; text-align: center;">
         <tr>
             <th>Sample</th>
@@ -144,7 +144,63 @@ in 2-chainlets.</p>
             <td>0.895</td>
         </tr>
     </table>
-    <p>The results demonstrate that orbits provide robust performance compared to BitcoinHeist features alone, especially in larger datasets.</p>
+
+        <h3>GNNs on the BitcoinHeist Benchmark</h3>
+    <p>We could not apply existing node classification approaches to the Bitcoin transaction network because the network is too large and contains as few as four e-crime addresses per day across over ten thousand days. Instead, we reformulated the node classification task as the classification of the subgraph of the two-hop neighborhood of an address.</p>
+
+    <p>Formally, we define the neighborhood graph of an address as the combination of the induced subgraphs of:
+        <ol>
+            <li>2-chainlets where the second transaction outputs coins to the address, and</li>
+            <li>2-chainlets where the first transaction outputs coins to the address.</li>
+        </ol>
+        An example of a neighborhood graph is shown in Figure 1.
+    </p>
+
+    <p><strong>Advantages of the Neighborhood Approach:</strong></p>
+    <ul>
+        <li>It enables an <em>inductive learner</em>, where an address from any day can be classified using its neighborhood graph from that day.</li>
+        <li>It allows control over the number of addresses classified, mitigating the computational costs of graph neural networks (GNNs).</li>
+    </ul>
+
+    <p><strong>GNN Models.</strong> We evaluate the orbit-based classifier against four GNNs on the BitcoinHeist data:</p>
+    <ul>
+        <li>DGCNN</li>
+        <li>GIN</li>
+        <li>GCN</li>
+        <li>GraphSage</li>
+    </ul>
+    <p>We report the average accuracy of five runs, along with their standard deviation, using grid search parameters from the benchmark study by Errica et al.</p>
+
+    <p>Despite the sparsity of the Bitcoin network and challenges of data imbalance, GNNs provide strong results. Table 2 summarizes the AUC scores for address classification:</p>
+
+    <table border="1" style="width: 60%; margin: 20px auto; text-align: center;">
+        <tr>
+            <th>Sample Size</th>
+            <th>GCN</th>
+            <th>GIN</th>
+            <th>DGCNN</th>
+        </tr>
+        <tr>
+            <td>20K</td>
+            <td>0.76 ± 0.002</td>
+            <td>0.90 ± 0.02</td>
+            <td>0.79 ± 0.09</td>
+        </tr>
+        <tr>
+            <td>10K</td>
+            <td>0.70 ± 0.004</td>
+            <td>0.88 ± 0.01</td>
+            <td>0.75 ± 0.09</td>
+        </tr>
+        <tr>
+            <td>5K</td>
+            <td>0.70 ± 0.002</td>
+            <td>0.86 ± 0.02</td>
+            <td>0.78 ± 0.09</td>
+        </tr>
+    </table>
+
+    <p><strong>Comparison of Orbits and GIN.</strong> The GIN model demonstrates strong performance, achieving an AUC of 0.90 for smaller datasets (up to 20K addresses). However, GNN models are constrained to smaller datasets due to computational limitations. In contrast, orbit-based models are scalable and can incorporate temporal patterns by analyzing entire daily transaction networks.</p>
 
     <h3>Orbits on the Large Bitcoin Network</h3>
     <p>We evaluate the generalization of e-crime classification with a larger Bitcoin dataset, sampling 1% of the daily white addresses (3.16 million addresses). The labeled data includes:</p>
@@ -184,6 +240,42 @@ in 2-chainlets.</p>
         <img src="figs/fig5.png" alt="Orbit-based Classification Performance" style="width: 60%;">
         <figcaption>AUC scores for orbit-based e-crime address classification. White and darknet classes are undersampled. Orbit performance remains robust as sample sizes increase.</figcaption>
     </figure>
+
+    <h2>Adversarial Patterns of E-Crime</h2>
+    <p>We analyze adversarial patterns within e-crime addresses, focusing on ransomware and darknet markets. Two primary patterns stand out:</p>
+
+    <h3>Ransomware Address Patterns</h3>
+    <p>Ransomware addresses primarily fall into two distinct orbit patterns:</p>
+    <ul>
+        <li><strong>Immediate Forwarding:</strong> Payments received are immediately forwarded to another address in a subsequent transaction.</li>
+        <li><strong>Escrow Behavior:</strong> Payments remain in the receiving address without further transfers, mimicking historical escrow practices in darknet markets.</li>
+    </ul>
+    <p>We observed that ransomware operators often reuse addresses to minimize transaction costs, which creates observable orbit patterns (e.g., Orbits 9 and 12). However, these patterns rarely connect to coin-mixing transactions, as shown in Figure 6.</p>
+
+    <h3>Coin-Mixing Transactions</h3>
+    <p>In coin-mixing transactions, orbits form more complex structures. We identify the following:</p>
+    <ul>
+        <li><strong>Multi-Step Patterns:</strong> Addresses combine coins from multiple transactions before forwarding them to new addresses.</li>
+        <li><strong>Intermediary Addresses:</strong> Specific addresses act as intermediaries, breaking the link between input and output transactions.</li>
+    </ul>
+
+    <p>Our analysis indicates that e-crime coins are first consolidated in specific addresses (Orbit 30 and 31) and subsequently mixed through intermediary steps. This makes identifying and tracking these addresses particularly challenging.</p>
+
+    <figure>
+        <img src="figs/fig6.png" alt="Adversarial Patterns of E-Crime" style="width: 60%;">
+        <figcaption>Adversarial patterns in ransomware and coin-mixing transactions. Darknet market sellers consolidate payments (Orbit 30, 31) before coin-mixing.</figcaption>
+    </figure>
+
+    <h3>Address Behavior Insights</h3>
+    <p>By analyzing orbits, we extract critical address behaviors:</p>
+    <ul>
+        <li>Ransomware payments are typically larger and exhibit forwarding behavior (Orbits 9, 12).</li>
+        <li>Coin-mixing involves consolidation and multi-step transfers, which stand out in orbit-based analysis.</li>
+        <li>White addresses rarely form the same complex structures, making anomalies easier to detect.</li>
+    </ul>
+
+    <p>These insights highlight the utility of orbits in identifying adversarial address patterns and tracking e-crime behavior within blockchain networks.</p>
+
 
     <p>We extend our definition to account-based blockchains by using the temporal order.</p>
 </body>
