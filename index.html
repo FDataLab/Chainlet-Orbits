@@ -61,14 +61,27 @@
 
     <p><strong>Orbit of an Address Node.</strong> Let \( C_k \) be a \( k \)-chainlet in \( G \), and \( u \) be an address node in \( C_k \). We define the orbit of \( u \) with respect to \( C_k \) as the collection of the images \( \phi(u) \) where \( \phi \) is an isomorphism from \( C_k \) to another \( k \)-chainlet \( C'_k \) in \( G \), i.e.,</p>
     <p style="text-align: center;">\( O_u = \{ \phi(u) \} \).</p>
-    <p>We call \( u \in C_k \) and \( v = \phi(u) \in C'_k \) similar nodes with respect to \( C_k \), i.e., \( u \sim v \) (mod \( C_k \)).</p>
 
     <p>We use the notation \( o \) to refer to orbits, e.g., \( o_{15} \) for the orbit 15.</p>
 
+    <h2>Active and Passive Orbits</h2>
+    <p>We define an orbit as active or passive based on the role of the associated address within a 2-chainlet.</p>
+    <p><strong>Active Orbit.</strong> Let \( C \) be a 2-chainlet. An active orbit with respect to \( C \) is an orbit where its addresses appear as the output of the first and the input of the second transaction in the corresponding occurrence of \( C \). When \( C \) is understood, we denote the set of active orbits as \( O_{\text{act}} \).</p>
+    <p>Active orbits indicate behavior created by the address owner, as the address in this orbit initiates a new transaction and sends coins to other addresses.</p>
+
+    <p><strong>Passive Orbit.</strong> Let \( C \) be a 2-chainlet. A passive orbit with respect to \( C \) is an orbit where it appears as the output of the first or the second transaction but not as an input of the second transaction in the corresponding occurrence of \( C \). When \( C \) is understood, we denote the set of passive orbits as \( O_{\text{pass}} \).</p>
+    <p>Unlike active orbits, passive orbits for a chainlet class \( E(C) \) receive coins without shaping any occurrences of \( C \), as the address in this orbit only receives coins from another address without initiating a new transaction. It is worth noting that an address can belong to an active orbit for one chainlet class while belonging to a passive orbit for a different chainlet class. This means that an address may exhibit both initiating and receiving behavior in different 2-chainlet types. The below figure provides sample active and passive orbit addresses
+in 2-chainlets.</p>
+
     <figure>
-        <img src="figs/2chainlet.png" alt="2-chainlet Example" style="width: 60%;">
-        <figcaption>A 2-chainlet of five addresses \( a_0, \dots, a_4 \). Each of the two transactions \( t_1 \) and \( t_2 \) has one input address, but \( t_2 \) has three output addresses.</figcaption>
+        <img src="figs/active-passive-fig3.png" alt="Active and Passive Orbits Example" style="width: 60%;">
+        <figcaption>Sample active and passive orbit addresses in 2-chainlets. Active orbits (striped) show addresses initiating transactions, while passive orbits (checkered) only receive coins.</figcaption>
     </figure>
+
+    <p>The distinction between active and passive orbits is significant for analyzing specific behaviors within the transaction graph. Active orbits help train classifiers to identify spending patterns, such as paying for ransom, as they reflect behavior initiated by the address owner. Conversely, passive orbits are useful for examining receiving behaviors.</p>
+
+
+
     <p>We extend our definition to account-based blockchains by using the temporal order.</p>
 </body>
 </html>
