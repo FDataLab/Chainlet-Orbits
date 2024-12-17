@@ -309,6 +309,10 @@ in 2-chainlets.</p>
         <img src="figs/combined_roc_curve_orbits.png" alt="Ethereum Address Classification Performance" style="width: 60%;">
         <figcaption>Ethereum address classification performance. The AUC achieves a peak value of 0.86 for protocol addresses.</figcaption>
     </figure>
+    <h2>Conclusion</h2>
+    <p>We have proposed a topological address embedding model, called <em>chainlet orbits</em>, that captures a node’s structural role in a blockchain graph. This approach results in compact and effective embeddings that can be easily integrated into node classification models, outperforming GNNs that can be trained for a small subset of the addresses only. Additionally, the orbit patterns can be visualized and used with interpretable models.</p>
+    <p>Our approach is applicable to graphs of both UTXO and account-based blockchains. The orbit discovery process is computationally cheap and scales to massive graphs easily; our approach embeds all daily nodes of the Bitcoin transaction network in less than 17 minutes.</p>
+    <p><strong>Future Work:</strong> Future work will focus on multi-modal graphs where meta attributes of transactions can be incorporated as node features. Another promising area of research is developing self-supervised ways to learn node and edge functions from data to define new orbits.</p>
 
 </body>
 </html>
