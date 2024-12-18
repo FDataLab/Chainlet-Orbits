@@ -13,11 +13,19 @@
             margin: 0;
             padding: 0;
         }
-        p, ul, ol, figure {
+        p{
+            margin: 0 auto;
+            width: 80%;
+        }
+        ul, ol, figure {
             text-align: justify;
             margin: 0 auto;
             width: 80%;
         }
+        main p {
+    text-align: justify; /* Only justify paragraphs inside <main> */
+}
+
         h1, h2, h3, h4 {
             text-align: center;
         }
@@ -41,11 +49,24 @@
             font-size: 24px;
             color: #333;
         }
-        footer p {
-            margin: 0;
-            font-size: 14px;
-            color: #666;
-        }
+footer {
+    display: flex; /* Flexbox ensures proper centering */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f8f9fa;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+footer p {
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
         .authors {
             margin-top: 10px;
             font-size: 16px;
@@ -71,21 +92,17 @@
         .button:hover {
             background-color: #555;
         }
-        .bibtex-container {
+        .bibtex-box {
             background-color: #f8f9fa;
-            border-left: 4px solid #007acc;
-            margin: 30px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             padding: 20px;
+            margin: 30px auto;
             width: 80%;
-            font-family: "Courier New", Courier, monospace;
-            font-size: 14px;
-            color: #333;
             text-align: left;
-        }
-        .bibtex-container h3 {
-            color: #007acc;
-            margin-top: 0;
-            font-size: 16px;
+            font-family: "Courier New", Courier, monospace;
+            color: #333;
+            word-wrap: break-word;
         }
     </style>
         <!-- MathJax for LaTeX Math Rendering -->
@@ -113,7 +130,7 @@
     <!-- Buttons -->
     <div class="buttons">
         <a href="https://github.com/chainletRepo/chainlet" class="button" target="_blank">Code</a>
-        <a href="https://huggingface.co/datasets/Chainlet/Blockchain_Orbits/tree/main" class="Dataset" target="_blank">Code</a>
+        <a href="https://huggingface.co/datasets/Chainlet/Blockchain_Orbits/tree/main" class="button" target="_blank">Dataset</a>
         <a href="https://arxiv.org/abs/2306.07974" class="button" target="_blank">arXiv</a>
     </div>
 
@@ -392,28 +409,31 @@ in 2-chainlets.</p>
     <p>We have proposed a topological address embedding model, called <em>chainlet orbits</em>, that captures a node’s structural role in a blockchain graph. This approach results in compact and effective embeddings that can be easily integrated into node classification models, outperforming GNNs that can be trained for a small subset of the addresses only. Additionally, the orbit patterns can be visualized and used with interpretable models.</p>
     <p>Our approach is applicable to graphs of both UTXO and account-based blockchains. The orbit discovery process is computationally cheap and scales to massive graphs easily; our approach embeds all daily nodes of the Bitcoin transaction network in less than 17 minutes.</p>
     <p><strong>Future Work:</strong> Future work will focus on multi-modal graphs where meta attributes of transactions can be incorporated as node features. Another promising area of research is developing self-supervised ways to learn node and edge functions from data to define new orbits.</p>
-    <br><br><br>
+    <br><br>
 
     <p>For additional details and experimental results, please refer to our main paper. Thank you!</p>
-    <br><br><br>
+    <br><br>
 
     </main>
 
         <!-- BibTeX Box -->
-    <div class="bibtex-box">
-        <h2 style="text-align:left; color:#2c5dff;">BibTeX</h2>
-        <code>
+<div class="bibtex-box" style="text-align: left; background-color: #f8f9fa; border-left: 4px solid #007acc; padding: 20px; width: 80%; margin: 20px auto;">
+    <h2 style="color:#2c5dff; margin-top: 0; text-align: left;">BibTeX</h2>
+    <pre style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #333;">
 @article{azad2023chainlet,
-  title={Chainlet Orbits: Topological Address Embedding for the Bitcoin Blockchain},
-  author={Azad, Poupak and Coskunuzer, Baris and Kantarcioglu, Murat and Akcora, Cuneyt Gurcan},
-  journal={arXiv preprint arXiv:2306.07974},
-  year={2023}
+title={Chainlet Orbits: Topological Address Embedding for the Bitcoin Blockchain},
+author={Azad, Poupak and Coskunuzer, Baris and Kantarcioglu, Murat and Akcora, Cuneyt Gurcan},
+journal={arXiv preprint arXiv:2306.07974},
+year={2023}
 }
-        </code>
-    </div>
+    </pre>
+</div>
+
     <!-- Footer -->
-    <footer>
-        <p>Accepted in KDD 2025</p>
-    </footer>
+<footer>
+    <p>Accepted in KDD 2025</p>
+</footer>
+
+
 </body>
 </html>
