@@ -8,6 +8,9 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
         }
         p, ul, ol, figure {
             text-align: justify;
@@ -16,16 +19,7 @@
         }
         h1, h2, h3, h4 {
             text-align: center;
-        }
-        figure {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        figcaption {
-            margin-top: 10px;
-            font-style: italic;
+            color: #333;
         }
         header, footer {
             background-color: #f8f9fa;
@@ -42,6 +36,38 @@
             font-size: 14px;
             color: #666;
         }
+        .buttons {
+            margin: 15px 0;
+        }
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            color: white;
+            background-color: #007BFF;
+        }
+        .buttons a:hover {
+            background-color: #0056b3;
+        }
+        .bibtex-box {
+            margin: 30px auto;
+            width: 80%;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: "Courier New", monospace;
+            text-align: left;
+            overflow-x: auto;
+        }
+        .bibtex-title {
+            text-align: left;
+            font-weight: bold;
+            color: #007BFF;
+            font-size: 18px;
+        }
     </style>
     <!-- MathJax for LaTeX Math Rendering -->
     <script type="text/javascript" async
@@ -52,6 +78,12 @@
     <!-- Header -->
     <header>
         <h1>Chainlet Orbits: Topological Address Embedding for Blockchain</h1>
+        <p><strong>Authors:</strong> Anonymous Authors</p>
+        <p><strong>Affiliations:</strong> University of Blockchain Research, Tech Analytics Institute</p>
+        <div class="buttons">
+            <a href="https://github.com/chainletRepo/chainlet" target="_blank">Code</a>
+            <a href="https://arxiv.org/abs/2306.07974" target="_blank">ArXiv</a>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -329,8 +361,23 @@ in 2-chainlets.</p>
     <p>We have proposed a topological address embedding model, called <em>chainlet orbits</em>, that captures a node’s structural role in a blockchain graph. This approach results in compact and effective embeddings that can be easily integrated into node classification models, outperforming GNNs that can be trained for a small subset of the addresses only. Additionally, the orbit patterns can be visualized and used with interpretable models.</p>
     <p>Our approach is applicable to graphs of both UTXO and account-based blockchains. The orbit discovery process is computationally cheap and scales to massive graphs easily; our approach embeds all daily nodes of the Bitcoin transaction network in less than 17 minutes.</p>
     <p><strong>Future Work:</strong> Future work will focus on multi-modal graphs where meta attributes of transactions can be incorporated as node features. Another promising area of research is developing self-supervised ways to learn node and edge functions from data to define new orbits.</p>
-</main>
+    <p></p>
+    <p>For additional details and experimental results, please refer to our main paper. Thank you!</p>
 
+    </main>
+
+        <!-- BibTeX Section -->
+    <section class="bibtex-box">
+        <div class="bibtex-title">BibTeX</div>
+        <pre>
+@article{azad2023chainlet,
+  title={Chainlet Orbits: Topological Address Embedding for the Bitcoin Blockchain},
+  author={Azad, Poupak and Coskunuzer, Baris and Kantarcioglu, Murat and Akcora, Cuneyt Gurcan},
+  journal={arXiv preprint arXiv:2306.07974},
+  year={2023}
+}
+        </pre>
+    </section>
     <!-- Footer -->
     <footer>
         <p>Accepted in KDD 2025</p>
