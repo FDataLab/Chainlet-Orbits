@@ -8,6 +8,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            line-height: 1.6;
             color: #333;
             margin: 0;
             padding: 0;
@@ -46,49 +47,45 @@
             color: #666;
         }
         .authors {
-            margin: 20px 0;
-            font-size: 18px;
+            margin-top: 10px;
+            font-size: 16px;
             color: #555;
         }
+        .universities {
+            font-size: 14px;
+            color: #777;
+        }
         .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            margin: 20px;
         }
         .button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            padding: 10px 20px;
+            display: inline-block;
             background-color: #333;
             color: #fff;
-            border: none;
-            border-radius: 25px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
             font-size: 16px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .button img {
-            height: 20px;
-            margin-right: 10px;
-            filter: invert(1);
+            margin: 10px;
         }
         .button:hover {
             background-color: #555;
         }
-        .bibtex-box {
+        .bibtex-container {
             background-color: #f8f9fa;
+            border-left: 4px solid #007acc;
+            margin: 30px auto;
             padding: 20px;
-            margin: 20px auto;
             width: 80%;
-            border-left: 5px solid #444;
-            font-family: monospace;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            color: #333;
             text-align: left;
         }
-        .bibtex-box code {
-            white-space: pre-wrap;
+        .bibtex-container h3 {
+            color: #007acc;
+            margin-top: 0;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -101,17 +98,13 @@
     <!-- Author Information -->
     <div class="authors">
         <p>Poupak Azad, Baris Coskunuzer, Murat Kantarcioglu, Cuneyt Gurcan Akcora</p>
-        <p>University of Manitoba, University of Texas, Dallas, University of Central Florida</p>
+        <p class="universities">University of Manitoba, University of Texas at Dallas, University of Central Florida</p>
     </div>
 
     <!-- Buttons -->
     <div class="buttons">
-        <a class="button" href="https://arxiv.org/abs/2306.07974" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/ArXiv_logo.svg" alt="arXiv">arXiv
-        </a>
-        <a class="button" href="https://github.com/chainletRepo/chainlet" target="_blank">
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">Code
-        </a>
+        <a href="https://github.com/chainletRepo/chainlet" class="button" target="_blank">Code</a>
+        <a href="https://arxiv.org/abs/2306.07974" class="button" target="_blank">arXiv</a>
     </div>
 
     <!-- Main Content -->
@@ -293,7 +286,7 @@ in 2-chainlets.</p>
     <p>We employ a one-versus-rest Random Forest classifier with an 80/20 train/test split. Figure 5 shows consistent AUC performance exceeding 0.8, demonstrating the strength of orbit-based classifiers.</p>
 
     <h4>Active and Passive Orbits</h4>
-    <p>We analyze the role of orbit types (active vs. passive) in detecting e-crime payments. Table 3 summarizes the macro-averaged AUC performance:</p>
+    <p>We analyze the role of orbit types (active vs. passive) in detecting e-crime payments. The following table summarizes the macro-averaged AUC performance:</p>
     <table border="1" style="width: 60%; margin: 20px auto; text-align: center;">
         <tr>
             <th>Class</th>
@@ -389,8 +382,10 @@ in 2-chainlets.</p>
     <p>We have proposed a topological address embedding model, called <em>chainlet orbits</em>, that captures a node’s structural role in a blockchain graph. This approach results in compact and effective embeddings that can be easily integrated into node classification models, outperforming GNNs that can be trained for a small subset of the addresses only. Additionally, the orbit patterns can be visualized and used with interpretable models.</p>
     <p>Our approach is applicable to graphs of both UTXO and account-based blockchains. The orbit discovery process is computationally cheap and scales to massive graphs easily; our approach embeds all daily nodes of the Bitcoin transaction network in less than 17 minutes.</p>
     <p><strong>Future Work:</strong> Future work will focus on multi-modal graphs where meta attributes of transactions can be incorporated as node features. Another promising area of research is developing self-supervised ways to learn node and edge functions from data to define new orbits.</p>
-    <p></p>
+    <br><br><br>
+
     <p>For additional details and experimental results, please refer to our main paper. Thank you!</p>
+    <br><br><br>
 
     </main>
 
