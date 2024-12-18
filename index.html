@@ -7,6 +7,7 @@
     <style>
         body {
             text-align: center;
+            font-family: Arial, sans-serif;
         }
         p, ul, ol, figure {
             text-align: justify;
@@ -26,6 +27,21 @@
             margin-top: 10px;
             font-style: italic;
         }
+        header, footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
     </style>
     <!-- MathJax for LaTeX Math Rendering -->
     <script type="text/javascript" async
@@ -33,7 +49,13 @@
     </script>
 </head>
 <body>
-    <h1>Chainlet Orbits: Topological Address Embedding for Blockchain</h1>
+    <!-- Header -->
+    <header>
+        <h1>Chainlet Orbits: Topological Address Embedding for Blockchain</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main>
     <h2>Abstract</h2>
     <p>The rise of cryptocurrencies like Bitcoin has not only increased trade volumes but also broadened the use of graph machine learning techniques, such as address embeddings, to analyze transactions and decipher user patterns. Traditional detection methods rely on simple heuristics and extensive data gathering, while more advanced Graph Neural Networks encounter challenges such as scalability, poor interpretability, and label scarcity in massive blockchain transaction networks.</p>
     <p>To overcome the computational and interpretability limitations of existing techniques, we introduce a topological approach, Chainlet Orbits, which embeds blockchain addresses by leveraging their topological characteristics in temporal transactions. We employ our innovative address embeddings to investigate financial behavior and e-crime in the Bitcoin, Litecoin, and Ethereum networks, focusing on distinctive substructures that arise from user behavior. In node classification experiments, our model demonstrates exceptional performance when compared to GNN-based approaches. Furthermore, our approach embeds all daily nodes of the largest blockchain transaction network, Bitcoin, and creates explainable machine learning models in less than 17 minutes, which takes days for GNN-based approaches.</p>
@@ -289,20 +311,14 @@ in 2-chainlets.</p>
 
     <p>Once anchors 1 and 2 are defined, we extract 2-chainlets and compute orbits of address nodes. By analyzing these orbit patterns, we effectively capture the dynamic transaction behaviors characteristic of account-based blockchain networks such as Ethereum.</p>
 
-
     <p><strong>Limitations.</strong> We note that account-based transactions inherently involve simpler, direct transactions between two parties (one sender and one receiver). This simplicity restricts the complexity of the transaction graph and subsequently limits the depth of analysis that can be performed using orbits. Without the natural formation of complex chainlets as in UTXO models, it’s challenging to capture rich, multi-step transaction patterns.</p>
 
     <h2>Ethereum Results</h2>
     <p>We train an address classifier on Ethereum for four types of DeFi protocols: lending, assets, derivatives, and decentralized exchanges, as well as a class for ordinary (“normal”) addresses. The classification problem is significant because new protocols are introduced on the Ethereum blockchain daily, and existing protocols create new addresses. Users and blockchain data analytics companies scour offline resources to find the entity behind an address with the goal of tracking investment and portfolio decisions, detecting transaction anomalies, and identifying smart contract hacking attempts. Automated address classification alleviates the need for much manual work. Hence, address type classification has appeared as an important and challenging task in Graph Machine Learning.</p>
-
     <p>It is important to note that Ethereum addresses, whether they belong to smart contracts or externally owned accounts, share the same format: a 42-character hexadecimal string beginning with "0x." This uniformity means that, when looking at the address string alone, there is no inherent way to differentiate between an address that represents a smart contract and one that represents an externally owned account.</p>
-
     <p>The distinction between these two types of addresses is critical in understanding their behavior and capabilities on the Ethereum network. Smart contracts are autonomous programs with code execution capabilities, while externally owned accounts are controlled by private keys and are responsible for initiating transactions. Without additional context or metadata, simply examining the address string does not reveal this information.</p>
-
     <p><strong>Experimental Setup:</strong> We selected the daily graph of September 20, 2021, because it contained the highest number of protocol addresses in ether transactions. However, even for this day, the data imbalance is significant: only 89 protocol addresses appeared in over 1 million ether transactions. To address this, we applied a down-sampling strategy for the “normal” addresses. Due to the limited dataset of protocol addresses, we were constrained to use a binary classification scheme distinguishing between protocol and non-protocol addresses.</p>
-
     <p><strong>Results:</strong> We used a random forest algorithm with 300 trees on orbits, where the most important orbits identified by the Gini importance measure were orbits 0, 1, 2, 8, and 29. These orbits are all passive orbits used to receive coin payments from users.</p>
-
     <p>The orbit model achieved an accuracy of 0.97, and the following figure shows an Area Under the Curve (AUC) of 0.86. Adding more ordinary nodes initially improves the classifier's performance but eventually deteriorates it. These results indicate that orbits are highly informative for Ethereum address classification, but additional labeled data, specifically unique addresses, is essential for further validation.</p>
 
     <figure>
@@ -313,6 +329,11 @@ in 2-chainlets.</p>
     <p>We have proposed a topological address embedding model, called <em>chainlet orbits</em>, that captures a node’s structural role in a blockchain graph. This approach results in compact and effective embeddings that can be easily integrated into node classification models, outperforming GNNs that can be trained for a small subset of the addresses only. Additionally, the orbit patterns can be visualized and used with interpretable models.</p>
     <p>Our approach is applicable to graphs of both UTXO and account-based blockchains. The orbit discovery process is computationally cheap and scales to massive graphs easily; our approach embeds all daily nodes of the Bitcoin transaction network in less than 17 minutes.</p>
     <p><strong>Future Work:</strong> Future work will focus on multi-modal graphs where meta attributes of transactions can be incorporated as node features. Another promising area of research is developing self-supervised ways to learn node and edge functions from data to define new orbits.</p>
+</main>
 
+    <!-- Footer -->
+    <footer>
+        <p>Accepted in KDD 2025</p>
+    </footer>
 </body>
 </html>
