@@ -113,8 +113,11 @@ footer p {
 <body>
     <!-- Header -->
     <header>
-        <h1>Chainlet Orbits: Topological Address Embedding for Blockchain</h1>
+    <h1>Chainlet Orbits: Topological Address Embedding for Blockchain
+        <a href="https://kdd2025.kdd.org/" target="_blank" style="color: inherit; text-decoration: none;">ACM KDD 2025 Conference</a>
+    </h1>
     </header>
+
 
 <!-- Authors Section -->
 <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
@@ -138,18 +141,18 @@ footer p {
     <main>
     <h2>Abstract</h2>
     <p>The rise of cryptocurrencies like Bitcoin has not only increased trade volumes but also broadened the use of graph machine learning techniques, such as address embeddings, to analyze transactions and decipher user patterns. Traditional detection methods rely on simple heuristics and extensive data gathering, while more advanced Graph Neural Networks encounter challenges such as scalability, poor interpretability, and label scarcity in massive blockchain transaction networks.</p>
-    <p>To overcome the computational and interpretability limitations of existing techniques, we introduce a topological approach, Chainlet Orbits, which embeds blockchain addresses by leveraging their topological characteristics in temporal transactions. We employ our innovative address embeddings to investigate financial behavior and e-crime in the Bitcoin, Litecoin, and Ethereum networks, focusing on distinctive substructures that arise from user behavior. In node classification experiments, our model demonstrates exceptional performance when compared to GNN-based approaches. Furthermore, our approach embeds all daily nodes of the largest blockchain transaction network, Bitcoin, and creates explainable machine learning models in less than 17 minutes, which takes days for GNN-based approaches.</p>
+    <p>To overcome the computational and interpretability limitations of existing techniques, we introduce a topological approach, Chainlet Orbits, which embeds blockchain addresses by leveraging their topological characteristics in temporal transactions. This work builds on the earlier <a href="https://ieeexplore.ieee.org/abstract/document/8970724/" target="_blank">chainlet</a> concept introduced to analyze transaction patterns in blockchain graphs. We employ our innovative address embeddings to investigate financial behavior and e-crime in the Bitcoin, Litecoin, and Ethereum networks, focusing on distinctive substructures that arise from user behavior. In node classification experiments, our model demonstrates exceptional performance when compared to GNN-based approaches. Furthermore, our approach embeds all daily nodes of the largest blockchain transaction network, Bitcoin, and creates explainable machine learning models in less than 17 minutes, which takes days for GNN-based approaches.</p>
 
     <h2>Chainlets and Orbits</h2>
     <p>The temporal position of an address node within a directed transaction graph determines its structural role, referred to as an <em>orbit</em>, which can be leveraged in supervised learning tasks. Our primary objective is to establish these roles and utilize them in graph machine learning models. Orbits apply to UTXO blockchains naturally because a one-time-use-only transaction appears in the heterogeneous graph as a node, which allows ordering address nodes. For this reason, we use UTXO networks to define orbits.</p>
     <figure>
-        <img src="figs/rsMostFreqpattern.png" alt="Directed Bitcoin Network Graph" style="width: 60%;">
+        <img src="figs/image_2024_12_18T16_00_35_143Z.png" alt="Directed Bitcoin Network Graph" style="width: 60%;">
         <figcaption>By analyzing transaction patterns within the directed Bitcoin network, we identify specific address behaviors (circular nodes) in transactions (rectangular nodes), assigning structural roles as orbits. An e-crime address (red, striped) demonstrates orbits 9, 13, and 14, typical for ransomware transactions.</figcaption>
     </figure>
 
     <p>We model the UTXO network with a graph \( G = (V, E, B) \) from a set of transactions \( TX \) and input and output addresses in \( TX \).</p>
-    <p>On \( G \), \( V \) is a set of nodes, and \( E \subseteq V \times V \) is a set of edges. \( B = \{ \textbf{Address}, \textbf{Transaction} \} \) represents the set of node types. A node \( u \in V \) has a node type \( \phi(u) \in B \).</p>
-    <p>For each edge \( e_{uv} \in E \) between adjacent nodes \( u \) and \( v \), we have \( \phi(u) \neq \phi(v) \). In other words, there is no edge between the same node types (Transaction → Transaction or Address → Address), and an edge \( e \in E \) represents a coin transfer between an address node and a transaction node.</p>
+    <p>On i\( G \), \( V \) is a set of nodes, and \( E \subseteq V \times V \) is a set of edges. \( B = \{ \textbf{Address}, \textbf{Transaction} \} \) represents the set of node types. A node \( u \in V \) has a node type \( \phi(u) \in B \).</p>
+    <p>Fori each edge \( e_{uv} \in E \) between adjacent nodes \( u \) and \( v \), we have \( \phi(u) \neq \phi(v) \). In other words, there is no edge between the same node types (Transaction → Transaction or Address → Address), and an edge \( e \in E \) represents a coin transfer between an address node and a transaction node.</p>
 
     <p><strong>Chainlets.</strong> Chainlets have been introduced to define position-invariant versions of transaction patterns. The key idea of the chainlet approach is to offer a lossless summary of all transactions by assigning two indices \( i, o \) in the \([0, n]\) range to each transaction with respect to its input and output addresses. A Bitcoin subgraph \( G' = (V', E', B) \) is a <em>subgraph</em> of \( G \), if \( V' \subseteq V \) and \( E' \subseteq E \). If \( G' = (V', E', B) \) is a subgraph of \( G \) and \( E' \) contains all edges \( e_{uv} \in E \) such that \( (u, v) \in V' \), then \( G' \) is called an <em>induced subgraph</em> of \( G \). Two graphs \( G' = (V', E', B) \) and \( G'' = (V'', E'', B) \) are called <em>isomorphic</em> if there exists a bijection \( h: V' \to V'' \) such that all node pairs \( u, v \in V' \) are adjacent in \( G' \) if and only if \( h(u) \) and \( h(v) \) are adjacent in \( G'' \).</p>
 
@@ -224,14 +227,14 @@ in 2-chainlets.</p>
         <tr>
             <td>50K</td>
             <td>0.807</td>
-            <td>0.857</td>
-            <td>0.908</td>
+            <td><strong>0.857</strong></td>
+            <td><strong>0.908</strong></td>
         </tr>
         <tr>
             <td>100K</td>
-            <td>0.808</td>
+            <td><strong>0.808</strong></td>
             <td>0.856</td>
-            <td>0.908</td>
+            <td><strong>0.908</strong></td>
         </tr>
         <tr>
             <td>500K</td>
@@ -285,19 +288,19 @@ in 2-chainlets.</p>
         <tr>
             <td>20K</td>
             <td>0.76 ± 0.002</td>
-            <td>0.90 ± 0.02</td>
+            <td><strong>0.90 ± 0.02</strong></td>
             <td>0.79 ± 0.09</td>
         </tr>
         <tr>
             <td>10K</td>
             <td>0.70 ± 0.004</td>
-            <td>0.88 ± 0.01</td>
+            <td><strong>0.88 ± 0.01</strong></td>
             <td>0.75 ± 0.09</td>
         </tr>
         <tr>
             <td>5K</td>
             <td>0.70 ± 0.002</td>
-            <td>0.86 ± 0.02</td>
+            <td><strong>0.86 ± 0.02</strong></td>
             <td>0.78 ± 0.09</td>
         </tr>
     </table>
@@ -333,7 +336,7 @@ in 2-chainlets.</p>
         <tr>
             <td>Darknet Market (DM)</td>
             <td>0.727</td>
-            <td>0.876</td>
+            <td><strong>0.876</strong></td>
         </tr>
     </table>
     <p>Passive orbits yield higher AUC values compared to active orbits. This result suggests that studying payer behaviors (e.g., victims in ransomware and buyers in darknet markets) is particularly effective for identifying e-crime addresses.</p>
@@ -421,10 +424,10 @@ in 2-chainlets.</p>
     <h2 style="color:#2c5dff; margin-top: 0; text-align: left;">BibTeX</h2>
     <pre style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 14px; color: #333;">
 @article{azad2023chainlet,
-title={Chainlet Orbits: Topological Address Embedding for the Bitcoin Blockchain},
+title={Chainlet Orbits: Topological Address Embedding for Blockchain},
 author={Azad, Poupak and Coskunuzer, Baris and Kantarcioglu, Murat and Akcora, Cuneyt Gurcan},
-journal={arXiv preprint arXiv:2306.07974},
-year={2023}
+journal={SIGKDD International Conference on Knowledge Discovery and Data Mining},
+year={2025}
 }
     </pre>
 </div>
